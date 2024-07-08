@@ -65,3 +65,5 @@ def popular():
     return jsonify(popular_books)
 
 
+if __name__ == '__main__':
+    app.run(debug=True)

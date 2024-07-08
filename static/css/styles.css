@@ -1,0 +1,137 @@
+body {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background: #74ebd5;
+  background: -webkit-linear-gradient(to right, #acb6e5, #74ebd5);
+  background: linear-gradient(to right, #acb6e5, #74ebd5);
+}
+h1,
+h2 {
+  color: black;
+  text-align: center;
+  background-color: #ffd863;
+  margin: 10px auto;
+  max-width: 95%;
+  border-radius: 10px;
+}
+h3,
+h4,
+p {
+  color: #ffffff;
+  text-align: center;
+}
+form {
+  margin-bottom: 20px;
+}
+#popular-books {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#recommendations {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.book-item,
+.books {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  padding-top: 20px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 215px;
+  height: 315px;
+  background: #000428;
+  background: -webkit-linear-gradient(to right, #004e92, #000428);
+  background: linear-gradient(to right, #004e92, #000428);
+
+  overflow: hidden;
+}
+
+.book-item img {
+  object-fit: none;
+  margin-bottom: 10px;
+  border: 5px solid white;
+}
+.books img {
+  border: 5px solid white;
+}
+
+.book-item h3 {
+  margin-bottom: 5px;
+}
+
+.book-item p {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+#btn {
+  background: #000428;
+  background: -webkit-linear-gradient(to right, #004e92, #000428);
+  background: linear-gradient(to right, #004e92, #000428);
+  border-radius: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  display: block;
+  margin: 10px auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+input {
+  text-align: center;
+  height: 36px;
+  border-radius: 10px;
+  font-size: larger;
+  margin: 10px;
+}
+#input-title {
+  font-size: x-large;
+  font-weight: 700;
+}
+ul {
+  list-style: none;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  color: azure;
+}
+a {
+  color: azure;
+}
+.footer {
+  background-color: rgb(0, 2, 26);
+  padding: 29px;
+  margin: 0 -10px;
+  color: azure;
+}
+.row {
+  list-style: none;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
