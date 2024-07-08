@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommendation</title>
+    <!--FONT AWESOME-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Book Recommendation System</h1>
+    <form id="recommendation-form">
+        <label for="book_title" id="title">Enter a book title:</label>
+        <input type="text" id="book_title" name="book_title" autocomplete="off" oninput="handleInput()">
+        <div id="suggestions"></div>
+        <div class="btn">
+            <button type="submit" id="btn">Get Recommendations</button>
+        </div>
+    </form>
+    <h2>Recommended Books:</h2>
+    <div id="recommendations"></div>
+    <h2>Popular Books:</h2>
+    <div id="popular-books"></div>
+    <footer>
+        <div class="footer">
+            <div class="row">
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/nikhil-babar/" target="_blank">Linkdin</a></li>
+                    <li><a href="/static/Nikhil Babar Resume Pragun pvt.pdf">Resume</a></li>
+                    <li><a href="https://github.com/Nikk579" target="_blank">Github</a></li>
+                    <li><a href="https://nikhilbabarportfolio.web.app/" target="_blank">Portfolio</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function handleInput() {
+            const inputText = document.getElementById('book_title').value;
+            fetch(`/suggest?query=${inputText}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestionsDiv = document.getElementById('suggestions');
+                    suggestionsDiv.innerHTML = '';
+                    data.forEach(book => {
+                        const suggestion = document.createElement('div');
+                        suggestion.textContent = book.title;
+                        suggestion.classList.add('suggestion');
+                        suggestion.addEventListener('click', () => {
+                            document.getElementById('book_title').value = book.title;
+                            suggestionsDiv.innerHTML = '';
+                        });
+                        suggestionsDiv.appendChild(suggestion);
+                    });
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch popular books with images
+            fetch('/popular')
+                .then(response => response.json())
+                .then(data => {
+                    const popularBooksDiv = document.getElementById('popular-books');
+                    data.forEach(book => {
+                        const bookDiv = document.createElement('div');
+                        bookDiv.classList.add('book-item');
+                        const img = document.createElement('img');
+                        img.src = book['Image-URL-M'];
+                        img.alt = book['Book-Title'];
+                        bookDiv.appendChild(img);
+
+                        const title = document.createElement('h4');
+                        title.textContent = book['Book-Title'];
+                        bookDiv.appendChild(title);
+
+                        const bookAuthor = document.createElement('p');
+                        bookAuthor.textContent = book['Book-Author'];
+                        bookDiv.appendChild(bookAuthor);
+
+                        popularBooksDiv.appendChild(bookDiv);
+                    });
+                });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('recommendation-form');
+            const input = document.getElementById('book_title');
+            const recommendationsDiv = document.getElementById('recommendations');
+
+            if (form && input && recommendationsDiv) {
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const bookTitle = input.value;
+
+                    fetch('/recommend', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ book_title: bookTitle })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);  // Debugging statement
+                            recommendationsDiv.innerHTML = '';
+                            data.forEach(book => {
+                                const bookDiv = document.createElement('div');
+                                bookDiv.className = 'books';
+                                const bookTitleElem = document.createElement('h3');
+                                bookTitleElem.textContent = `${book.title} `;
+                                const bookAuthor = document.createElement('p');
+                                bookAuthor.textContent = `Author: ${book.author}`;
+                                const bookImage = document.createElement('img');
+                                bookImage.src = book.image_url;
+                                bookImage.alt = book.title;
+                                bookDiv.appendChild(bookTitleElem);
+                                bookDiv.appendChild(bookAuthor);
+                                bookDiv.appendChild(bookImage);
+                                recommendationsDiv.appendChild(bookDiv);
+                            });
+                        });
+                });
+            } else {
+                console.error("Form or input elements not found");
+                console.log({ form, input, recommendationsDiv }); // Debugging statement
+            }
+        });
+    </script>
+</body>
+
+</html>
